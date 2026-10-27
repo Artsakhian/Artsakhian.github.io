@@ -26,6 +26,7 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
+  overflow-x: clip;
   background: var(--bg);
   color: var(--text);
   font: 17px/1.6 "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -68,7 +69,26 @@ p { margin: 0 0 12px; }
   align-items: center;
   text-align: center;
   margin-bottom: 56px;
+  position: relative;
+  isolation: isolate;
 }
+
+/* Animated background behind the intro, full width, fading out at the bottom */
+.bg {
+  position: absolute;
+  z-index: -1;
+  top: -64px;
+  height: calc(100% + 104px);
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
+}
+
+.photo, .bio, .links a { position: relative; }
+.bio { background: color-mix(in srgb, var(--bg) 70%, transparent); border-radius: 12px; }
 
 .photo {
   width: 200px;
@@ -168,6 +188,7 @@ footer {
 
 @media (max-width: 640px) {
   main { padding-top: 40px; }
+  .bg { top: -40px; height: calc(100% + 80px); }
   .photo { width: 150px; height: 150px; }
   h1 { font-size: 1.9rem; }
 }
